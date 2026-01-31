@@ -1,5 +1,5 @@
 annotated-types==0.7.0
--e git+https://github.com/dabu3393/behavioral-baseline-engine.git@e7941cee290c7cc721f6fa022d7b3891b6206ed8#egg=baseline_engine
+-e git+https://github.com/dabu3393/behavioral-baseline-engine.git@0f262d3d83c3d8a5b9d3a72657efbdc732cf5764#egg=baseline_engine
 click==8.3.1
 iniconfig==2.3.0
 markdown-it-py==4.0.0

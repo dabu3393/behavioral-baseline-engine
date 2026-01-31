@@ -161,6 +161,29 @@ class BaselineStore:
 
         return self._row_to_baseline(row) if row is not None else None
 
+    def list_keys(self) -> List[str]:
+        with self.connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT DISTINCT key_str
+                FROM baselines
+                ORDER BY key_str ASC
+                """
+            ).fetchall()
+        return [r["key_str"] for r in rows]
+
+    def count_by_key(self) -> List[tuple[str, int]]:
+        with self.connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT key_str, COUNT(*) as cnt
+                FROM baselines
+                GROUP BY key_str
+                ORDER BY key_str ASC
+                """
+            ).fetchall()
+        return [(r["key_str"], int(r["cnt"])) for r in rows]
+
     def _row_to_baseline(self, row: sqlite3.Row) -> BaselineStats:
         key = BaselineKey(
             entity_id=row["entity_id"],
@@ -178,4 +201,3 @@ class BaselineStore:
             created_at=_iso_to_dt(row["created_at"]),
             version=int(row["version"]),
         )
-        
